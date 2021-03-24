@@ -1,17 +1,22 @@
-import React from 'react';
+import * as React from 'react';
 import ReactDOM from 'react-dom';
+import { ApolloProvider } from '@apollo/client';
+import 'normalize.css';
+import { App } from './App';
+import { createClient } from './graphql_server/mock_server';
 import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+const run = async () => {
+  const client = await createClient();
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+  ReactDOM.render(
+    <React.StrictMode>
+      <ApolloProvider client={client}>
+        <App />
+      </ApolloProvider>
+    </React.StrictMode>,
+    document.getElementById('root')
+  );
+};
+
+run();
