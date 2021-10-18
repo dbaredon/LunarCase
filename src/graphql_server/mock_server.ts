@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { makeExecutableSchema } from '@graphql-tools/schema';
 import { SchemaLink } from '@apollo/client/link/schema';
-import { ApolloClient, InMemoryCache } from '@apollo/client';
+import { ApolloClient, InMemoryCache, Resolvers } from '@apollo/client';
 import TestData from './data/transactions_test_dev.json';
+import { Transaction } from '../types';
 
 const typeDefs = `
   enum TransactionType {
@@ -64,16 +65,13 @@ const typeDefs = `
 `;
 
 export const createClient = async () => {
-  let transactions = [...TestData.data.transactions];
+  let transactions = [
+    ...TestData.data.transactions,
+  ] as ReadonlyArray<Transaction>;
 
-  const resolvers = {
+  const resolvers: Resolvers = {
     Query: {
-      transactions: async (
-        _root: any,
-        _args: any,
-        _context: any,
-        _info: any
-      ) => {
+      transactions: async (_root, _args, _context, _info) => {
         await delay(50 + Math.random() * 450);
 
         return transactions;
@@ -81,10 +79,10 @@ export const createClient = async () => {
     },
     Mutation: {
       deleteAuthorization: async (
-        _root: any,
-        { input: { transactionId } }: any,
-        _context: any,
-        _info: any
+        _root,
+        { input: { transactionId } },
+        _context,
+        _info
       ) => {
         let updatedTransaction = null;
 
