@@ -1,7 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { useTransactionsQuery } from './get_transactions';
-// TODO: Task #1 – delete authorization mutation
 import { useDeleteAuthorizationMutation } from './delete_authorization';
 
 type TransactionsProps = {
@@ -12,17 +11,12 @@ type SortOrder = 'newest' | 'oldest';
 
 export const Transactions = ({ userId }: TransactionsProps) => {
     const { data, loading, error } = useTransactionsQuery({
-        variables: {
-            userId,
-        },
+        variables: { userId },
     });
 
-    // ✅ Task #1 – delete authorization mutation
+    // TODO: Task #1 – delete authorization mutation
     const [deleteAuthorization, { loading: deleting }] =
         useDeleteAuthorizationMutation();
-
-    // ✅ Task #2 – state til at styre sorteringsretning
-    const [sortOrder, setSortOrder] = React.useState<SortOrder>('newest');
 
     const handleDelete = async (transactionId: string) => {
         await deleteAuthorization({
@@ -31,15 +25,10 @@ export const Transactions = ({ userId }: TransactionsProps) => {
         });
     };
 
-    if (loading && !data) {
-        return <div>Loading...</div>;
-    }
+    // TODO: Task #2 – sortér client-side (nyeste/ældste) + filtrér slettede væk
+    const [sortOrder, setSortOrder] = React.useState<SortOrder>('newest');
+    
 
-    if (error) {
-        return <div>An error occurred 😭</div>;
-    }
-
-    // ✅ Task #2 – sortér client-side
     const items = React.useMemo(() => {
         const txs = [...(data?.transactions ?? [])].filter(tx => !tx.deleted);
         txs.sort((a, b) => {
@@ -50,6 +39,9 @@ export const Transactions = ({ userId }: TransactionsProps) => {
         return txs;
     }, [data, sortOrder]);
 
+    if (loading && !data) return <div>Loading...</div>;
+    if (error) return <div>An error occurred 😭</div>;
+
     return (
         <StyledCard>
             <StyledTable>
@@ -59,7 +51,7 @@ export const Transactions = ({ userId }: TransactionsProps) => {
                         <th>Type</th>
                         <th>Title</th>
                         <th>Amount</th>
-                        {/* ✅ Task #2 – clicking this header toggles date sorting */}
+                        {/* TODO: Task #2 – clicking this header should toggle date sorting */}
                         <th
                             style={{ cursor: 'pointer', userSelect: 'none' }}
                             onClick={() =>
@@ -67,11 +59,10 @@ export const Transactions = ({ userId }: TransactionsProps) => {
                             }
                             title="Toggle date sort"
                         >
-                            Time {sortOrder === 'newest' ? '↓' : '↑'}
+                            Time {sortOrder === 'newest' ? '- Newest ↓' : '- Oldest ↑'}
                         </th>
                         <th>Status</th>
                         <th>Category</th>
-                        {/* ✅ Task #1 – header for Delete column */}
                         <th>Delete</th>
                     </tr>
                 </StyledTableHeader>
@@ -92,7 +83,7 @@ export const Transactions = ({ userId }: TransactionsProps) => {
                         <td>
                             <img src={transaction.categoryIconUrl} alt="" />
                         </td>
-                        {/* ✅ Task #1 – Delete button vises kun for authorization */}
+
                         <td>
                             {transaction.status === 'authorization' && (
                                 <DeleteButton
@@ -111,17 +102,17 @@ export const Transactions = ({ userId }: TransactionsProps) => {
     );
 };
 
-// ----------------- STYLING -----------------
+
 
 const StyledTable = styled.table`
-  width: 100%;
-  position: relative;
+    width: 100%;
+    position: relative;
 
-  td,
-  th {
-    padding: 8px;
-    text-align: left;
-  }
+    td,
+    th {
+        padding: 8px;
+        text-align: left;
+    }
 `;
 
 const StyledTableHeader = styled.thead`
