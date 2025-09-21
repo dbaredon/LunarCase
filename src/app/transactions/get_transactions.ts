@@ -1,5 +1,5 @@
 import { gql, QueryHookOptions, useQuery } from '@apollo/client';
-import { Transaction } from '../types';
+import { Transaction } from '../../framework/types/types';
 
 const TransactionsQuery = gql`
   query GetTransactions($userId: ID!) {

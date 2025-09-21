@@ -1,5 +1,5 @@
 import { gql, MutationHookOptions, useMutation } from '@apollo/client';
-import { Transaction } from '../types';
+import { Transaction } from '../../framework/types/types';
 
 const DeleteAuthorizationMutation = gql`
   mutation deleteAuthorization($transactionId: ID!) {

@@ -1,112 +1,76 @@
-# Lunar Frontend Challenge
+# 🚀 Lunar Frontend Intern Challenge
 
-Welcome to the Lunar Web Code Challenge. This repo contains a (barely) working project which can fetch and show a list of financial transactions.
+Welcome to the Lunar Frontend Intern Challenge! We’ve recreated a small feature inspired by real production code — a transaction list — and your mission is to add new functionality and polish it. You’ll be working with React, TypeScript, styled-components, and GraphQL (one query + one mutation are already scaffolded). The challenge consists of a few main tasks plus a bunch of optional ones.
 
-This project is based on create-react-app with typescript and (mock) Apollo Graphql for data fetching and caching. You can run the project by doing a `npm run start` and accessing it in the browser.
+## 🤖 AI usage
 
-We have included a mock graphql "server" with hooks to query for transactions and marking them as deleted.
+**Using AI is not considered cheating** — it’s a tool like any other, and knowing how to use it well is part of being a modern developer.
 
-The following is a representation of various requests coming in for improvements to this (fictional) project. Your assignment is to implement some (not necessarily all, feel free to choose) of these requests (use ~5 hours) and be ready to tell us what you did and why.
+AI tools are a natural part of modern development workflows, and we don’t expect you to avoid them during this challenge. In fact, knowing how to use AI effectively and responsibly is a valuable skill — one we consider important.
 
-## Request 1 - Delete a transaction
+You’re welcome to use AI for guidance, inspiration, or to help solve problems. All we ask is that you make a brief note (in comments, commit messages, or a small section at the end of this README) wherever AI meaningfully contributed to your solution. Most importantly, make sure you fully understand and can take ownership of the code you submit.
 
-As a user, I need to be able to delete transactions of the `authorization` type.
+## 🛠 Quick start
 
-#### Acceptance Criteria
+```bash
+pnpm install
+pnpm run start  # opens http://localhost:3000
+```
 
-- Each transaction has a delete button/icon which triggers a `deleteAuthorization` mutation.
+When the dev server starts you’ll see a simple app with a home page and a sidebar where you can navigate to the transactions view. Here you'll see a table of mock transactions fetched with `useTransactionsQuery`. The data is mocked locally.
 
-#### Notes
+---
 
-A `deleteAuthorization` mutation hook is already made available for use.
+## 🚩 Tasks
 
-## Request 2 - Sorting and filtering
+### 1️⃣ Delete an authorization (main task)
 
-- As a user, I need to be able to both filter and sort the listed transactions.
+Every transaction has a status — either future, financial, or **authorization**. The purpose of this task is to add functionality that lets you delete transactions with the **authorization** status.
 
-#### Acceptance Criteria
+Add a “Delete” button on transaction rows where:
 
-- Transactions can be filtered by `localizableTitle` **and** `status`.
-- Transactions can be sorted descending/ascending by `time`.
-- Nice to have: Multiple sorts can be applied at the same time (e.g. `status` descending, `time` ascending)
-- Nice to have: Filtering and sorting is possible at the same time.
+- `status === "authorization"`
 
-#### Notes
+Use the generated mutation hook:
 
-This should be done client-side.
+```ts
+import { useDeleteAuthorizationMutation } from "./transactions/delete_authorization";
+```
 
-## Request 3 - Transaction details
+Baseline (required):
 
-As a user, I need to be able to view detailed transation information.
+1. Execute the mutation.
+2. Make the row disappear after deletion **by adding** `refetchQueries: ['GetTransactions']` _or_ by filtering local state.
 
-#### Acceptance Criteria
+Extra-credit (optional): skip the refetch and update the UI **optimistically** using either `optimisticResponse` _or_ the `update(cache)` function.
 
-- Further transaction details in the data must be viewable when selecting a transaction.
+### 2️⃣ Sort by date (main task)
 
-## Tech Debt
+Add a toggle (button or clickable column header) that switches between “newest first” and “oldest first”. Sorting must run client-side only.
 
-- Refactor components and files into a stucture you think is awesome and scaleable for multiple new features besides a transaction view.
-- Handle error and loading states better.
+---
 
-## Design upgrades
+## ✨ Stretch goals (optional)
 
-According to the designer, the transaction table could use several visual upgrades:
+If you finish the main tasks and still have time, here are some optional improvements you can explore:
 
-- It should be easier to have a clear visual representation of each transaction row.
-- Some icons are failing - there should be a fallback image.
-- Amounts are improperly formatted - they should always be displayed with a '.' as the decimal seperator and with a ',' as thousand seperator - and with correctly formatted currency.
+1. Implement an optimistic cache update (if not already done).
+2. Refine the visual design — improve table readability with theme colors, hover states, etc.
+3. Add support for multi-criteria sorting (e.g., by status or title).
+4. Make rows interactive — clicking a row could open a details drawer, dialog, or another pattern you think fits well
+5. Improve loading and error states to enhance the user experience.
+6. Add theme-switching functionality (a dark theme already exists in theme.ts).
 
-## Nice to know
+---
 
-- You have original Lunar theme colors available through props in styled-components. See `theme.ts` for documenation.
+## ⏱ Expected time
 
-## Getting Started with Lunar Web Code Challenge
+We expect you to spend up to eight hours on this challenge — and remember, we value good, clean code and a clear commit history more than the number of stretch goals completed. Focus on clarity, structure, and maintainability — that’s what we care about most.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+---
 
-### Quick setup
+## 📦 Submission
 
-- Run the recommended Node version `nvm use 20.14.0` or `nvm i`
+Push your solution to a public GitHub repo (or private and invite us) and share the link, or zip the folder and email it.
 
-### Available Scripts
-
-In the project directory, you can run:
-
-#### `npm run start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-#### `npm run test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-#### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-#### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-### Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Good luck – and have fun! ✨

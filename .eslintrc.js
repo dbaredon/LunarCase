@@ -2,6 +2,7 @@ module.exports = {
   extends: ['eslint:recommended', 'plugin:react/recommended'],
   parserOptions: {
     sourceType: 'module',
+    requireConfigFile: false,
   },
   parser: '@babel/eslint-parser',
   overrides: [
@@ -27,7 +28,6 @@ module.exports = {
     commonjs: true,
     es6: true,
     node: true,
-    jest: true,
   },
   settings: {
     react: {

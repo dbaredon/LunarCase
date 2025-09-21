@@ -3,7 +3,7 @@ import { makeExecutableSchema } from '@graphql-tools/schema';
 import { SchemaLink } from '@apollo/client/link/schema';
 import { ApolloClient, InMemoryCache, Resolvers } from '@apollo/client';
 import TestData from './data/transactions_test_dev.json';
-import { Transaction } from '../types';
+import { Transaction } from '../framework/types/types';
 
 const typeDefs = `
   enum TransactionType {
