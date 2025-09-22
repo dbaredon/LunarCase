@@ -1,4 +1,32 @@
-# 🚀 Lunar Frontend Intern Challenge
+## Case: Frontend Intern Challenge ##
+
+### AI usage in context
+
+I used AI as a coding helper along the way. Not to do the assignment for me, but to save time when I got stuck, check my ideas, and polish the final code.
+Main tasks
+Delete authorization mutation: AI helped me shape the delete handler with useDeleteAuthorizationMutation, especially around using try/catch and refetching the query.
+Sorting state: I double-checked with AI how to manage sorting using useState and useMemo, and also got a cleaner compare function for dates and grouping by month.
+
+Stretch goals
+
+Visual improvements: Asked for feedback on styled-components (spacing, hover effects, theme colors, responsive drawer).
+Interactive rows: Used AI as a sparring partner for making rows clickable and showing a detail drawer.
+Loading and error states: Looked up how to design spinners.
+Theme switching: Asked how to structure a small dropdown to switch between dark and light mode.
+
+In short:
+I wrote the code and made the design decisions myself. AI was mainly there to:
+remind me of React and TypeScript syntax
+suggest best practices
+point out small pitfalls with hooks
+give quick inspiration for styling tweaks
+
+Overall reflection:
+React is still a fairly new technology for me. Coming from a background with more C#, the biggest challenge has been getting used to the syntax and patterns in React/TypeScript. That’s also where AI helped me the most – bridging the gap so I could focus on the actual logic and design of the solution.
+
+
+
+# 🚀 Lunar Frontend Intern Challenge ##
 
 Welcome to the Lunar Frontend Intern Challenge! We’ve recreated a small feature inspired by real production code — a transaction list — and your mission is to add new functionality and polish it. You’ll be working with React, TypeScript, styled-components, and GraphQL (one query + one mutation are already scaffolded). The challenge consists of a few main tasks plus a bunch of optional ones.
 
